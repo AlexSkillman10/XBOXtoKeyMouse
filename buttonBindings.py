@@ -20,7 +20,7 @@ right_trigger = None
 
 #circle button bindings
 x_button = Key.backspace 
-y_button = None
+y_button = 'C:/Windows/System32/osk.exe'
 a_button = Button.left
 b_button = Button.right
 

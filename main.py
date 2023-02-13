@@ -1,3 +1,5 @@
+import os
+import subprocess
 import buttonBindings as bindings
 from XboxController import XboxController
 
@@ -9,11 +11,13 @@ import pydirectinput
 
 import time
 
+import ctypes, sys
 
-
-
-keyboard = KeyboardController()
-mouse = MouseController()
+def is_admin():
+  try:
+      return ctypes.windll.shell32.IsUserAnAdmin()
+  except:
+      return False
 
 class ButtonFunctions:
   def __init__(self):
@@ -38,11 +42,16 @@ class ButtonFunctions:
   def single_press(self, button):
     if type(button) == Button:
       self.mouse_press(button)
-    else:
+    elif type(button) == Key:
       self.key_press(button)
+    else:
+      os.startfile(button)
 
 
-if __name__ == '__main__':
+if __name__ == '__main__' and is_admin():
+
+  keyboard = KeyboardController()
+  mouse = MouseController()
 
   Xbox = XboxController()
   button_functions = ButtonFunctions()
@@ -88,4 +97,7 @@ if __name__ == '__main__':
     
     button_update_counter += 1
     time.sleep(0.01)
+else:
+  ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
+
       
