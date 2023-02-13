@@ -19,7 +19,7 @@ right_trigger = None
 
 #circle button bindings
 x_button = Key.backspace 
-y_button = None
+y_button = '%windir%\system32\osk.exe'
 a_button = Button.left
 b_button = Button.right
 
@@ -35,7 +35,7 @@ start_button = None
 
 #joystick button bindings
 right_joystick = Button.left
-left_joystick = None
+left_joystick = None #currently used to scroll with left joystick. Do not change
 
 #joystick deadzone
 joystick_deadzone = 0.08

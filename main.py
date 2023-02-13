@@ -4,6 +4,7 @@ from XboxController import XboxController
 from pynput.keyboard import Key, Controller as KeyboardController
 from pynput.mouse import Button, Controller as MouseController
 
+import subprocess 
 
 import time
 
@@ -28,6 +29,8 @@ class ButtonFunctions:
       self.key_press(button)
     elif type(button) == Button:
       self.mouse_press(button)
+    else:
+      subprocess.call(button, shell=True) 
 
       
 
@@ -51,7 +54,10 @@ if __name__ == '__main__':
       move_x = 0
     if abs(move_y) < deadzone:
       move_y = 0
-    mouse.move(pow(move_x * 2, 5), pow(move_y * -2, 5))
+    if controller_values['BTN_THUMBL'] == 1:
+      mouse.scroll(0, move_y * .7)
+    else:
+      mouse.move(pow(move_x * 2, 5), pow(move_y * -2, 5))
 
     ##joystick
     for key in bindings.button_binary_keys.keys():
