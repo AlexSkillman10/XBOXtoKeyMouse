@@ -1,8 +1,9 @@
 from pynput.keyboard import Key
 from pynput.mouse import Button
 
-# use this file to set your preffered button bindings. Analog stick functions cannot be changed,
-# but you can change the deadzones and mouse movement sensitivity
+# Use this file to set your preffered button bindings.
+# The left stick is bound to mouse movement and scrolling, the right is used for the keyboard. These cannot be changed.
+# However, their deadzones and sensitivity can be modified below
 
 # you can find a list of keys here:
 # https://pynput.readthedocs.io/en/latest/keyboard.html

@@ -28,7 +28,7 @@ class XboxController(object):
             'ABS_HAT0X': 0,
         }
 
-        self.controller_status = 'Connected'
+        self.controller_status = None
 
         self._monitor_thread = threading.Thread(target=self._monitor_controller, args=())
         self._monitor_thread.daemon = True
