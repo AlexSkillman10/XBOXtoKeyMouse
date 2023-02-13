@@ -11,12 +11,14 @@ alexskillman10@gmail.com
 
 # Installation and Usage
 
-This program runs using two python packages, pynput and inputs.
+This program runs using three python packages, pynput, inputs, and pydirectinput
 You can enter the following commands with bash or the terminal 
 
 >pip install inputs
 
 >pip install pynput
+
+>pip install pydirectinput
 
 After these have installed, run main.py with python 2.9 or newer.
 If your controller is connected, try moving a stick or pressing a button.
@@ -26,7 +28,7 @@ The controller status should appear in the window.
 
 You can change the bindings of the remote by modifying the variables in buttonBindings.py.
 Check out the links for specific keys. If you want to link it to just a character,
-simply type 'a', or 'b'. 
+simply type 'a', or 'b' (must be single character).
 
 # Default Controls
 

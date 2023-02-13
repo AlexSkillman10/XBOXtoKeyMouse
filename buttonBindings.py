@@ -11,8 +11,8 @@ from pynput.mouse import Button
 
 
 #bumper bindings
-right_bumper = None
-left_bumper = None
+right_bumper = Key.media_next
+left_bumper = Key.media_previous
 
 #trigger bindings
 left_trigger = None
