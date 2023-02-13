@@ -1,7 +1,10 @@
 from inputs import get_gamepad
+import inputs
 import threading
+import time
 
 class XboxController(object):
+
 
     def __init__(self):
         self.controller_values = {
@@ -24,6 +27,9 @@ class XboxController(object):
             'ABS_HAT0Y': 0,
             'ABS_HAT0X': 0,
         }
+
+        self.controller_status = 'Connected'
+
         self._monitor_thread = threading.Thread(target=self._monitor_controller, args=())
         self._monitor_thread.daemon = True
         self._monitor_thread.start()
@@ -31,10 +37,23 @@ class XboxController(object):
     def get_value(self):
         return self.controller_values
 
+    def change_plug_state(self, state):
+        if self.controller_status != state:
+            self.controller_status = state
+            print("Controller Status: ", state)
+
 
     def _monitor_controller(self):
         while True:
-            events = get_gamepad()
+            events = []
+            try:
+                events = get_gamepad()
+                self.change_plug_state('Connected')
+            except inputs.UnpluggedError:
+                self.change_plug_state('Disconnected')
+                inputs.devices._detect_gamepads()
+                time.sleep(.5)
+            
             for event in events:
                 for key in self.controller_values.keys():
                     if event.code == key and event.code in ['ABS_Y', 'ABS_X', 'ABS_RY', 'ABS_RX']:

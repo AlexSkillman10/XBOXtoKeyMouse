@@ -32,10 +32,6 @@ class ButtonFunctions:
     else:
       subprocess.call(button, shell=True) 
 
-      
-
-
-
 
 if __name__ == '__main__':
 
@@ -57,24 +53,21 @@ if __name__ == '__main__':
     if controller_values['BTN_THUMBL'] == 1:
       mouse.scroll(0, move_y * .7)
     else:
-      mouse.move(pow(move_x * 2, 5), pow(move_y * -2, 5))
+      base_sens = bindings.joystick_sensitivity_base_multiplier
+      sens_curve = bindings.joystick_applied_power_curve
+      mouse.move(pow(move_x * base_sens, sens_curve), pow(move_y * -base_sens, sens_curve))
 
-    ##joystick
+    ##binary_buttons
     for key in bindings.button_binary_keys.keys():
       action = None
-
       if key in ['ABS_HAT0Y', 'ABS_HAT0X']:
         action = bindings.button_binary_keys[key][controller_values[key]]
       elif controller_values[key] > .02:
         action = bindings.button_binary_keys[key]
-
       if action != None:
           button_functions.single_press(action)
           time.sleep(0.08)
 
 
-      
-
-
-    time.sleep(0.001)
+    time.sleep(0.01)
       
