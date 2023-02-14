@@ -78,7 +78,7 @@ if __name__ == '__main__' and is_admin():
 
     if controller_values['BTN_THUMBR'] and controller_values['BTN_THUMBL']:
       button_functions.flip_active_state()
-      time.sleep(0.3)
+      time.sleep(.3)
 
     if button_functions.get_active_state():
       ##mouse movement
@@ -115,6 +115,8 @@ if __name__ == '__main__' and is_admin():
       
       button_update_counter += 1
       time.sleep(0.01)
+    else:
+      time.sleep(.01)
 else:
   ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
 
