@@ -76,7 +76,7 @@ if __name__ == '__main__' and is_admin():
     
     controller_values = Xbox.get_value()
 
-    if controller_values['BTN_SELECT'] and controller_values['BTN_START']:
+    if controller_values['BTN_THUMBR'] and controller_values['BTN_THUMBL']:
       button_functions.flip_active_state()
       time.sleep(0.3)
 
