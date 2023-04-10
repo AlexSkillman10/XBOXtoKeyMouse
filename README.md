@@ -36,7 +36,7 @@ You can change the bindings of the remote by modifying the variables in buttonBi
 Check out the links for specific keys. If you want to link it to just a character,
 simply type 'a', or 'x' (must be single character). To link a button to a program,
 link the path as a string to the the button in bindings.py. You will most likely
-need ot change all '\' to '/'.
+need ot change all the backslashes into forward slashes
 
 # Default Controls
 

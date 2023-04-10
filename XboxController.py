@@ -28,7 +28,7 @@ class XboxController(object):
             'ABS_HAT0X': 0,
         }
 
-        self.controller_status = None
+        self.controller_status = True
 
         self._monitor_thread = threading.Thread(target=self._monitor_controller, args=())
         self._monitor_thread.daemon = True
@@ -38,21 +38,20 @@ class XboxController(object):
         return self.controller_values
 
     def change_plug_state(self, state):
-        if self.controller_status != state:
-            self.controller_status = state
-            print("Controller Status: ", state)
+        self.controller_status = state
 
 
     def _monitor_controller(self):
         while True:
             events = []
-            try:
+
+            try:  
                 events = get_gamepad()
-                self.change_plug_state('Connected')
+                self.controller_status = True
             except inputs.UnpluggedError:
-                self.change_plug_state('Disconnected')
+                self.controller_status = False
                 inputs.devices._detect_gamepads()
-                time.sleep(.5)
+                time.sleep(.1)
             
             for event in events:
                 for key in self.controller_values.keys():

@@ -13,11 +13,11 @@ import time
 import ctypes, sys
 
 def is_admin():
+  # return True
   try:
       return ctypes.windll.shell32.IsUserAnAdmin()
   except:
       return False
-
 
 class ButtonFunctions:
   def __init__(self):
@@ -43,9 +43,6 @@ class ButtonFunctions:
       self.program_active_state = True
     print('Program State: ' + ('Paused' if not self.program_active_state else 'Active'))
     
-  def get_active_state(self):
-    return self.program_active_state
-
   def mouse_press(self, button):
       mouse.press(button)
       mouse.release(button)
@@ -80,7 +77,7 @@ if __name__ == '__main__' and is_admin():
       button_functions.flip_active_state()
       time.sleep(.3)
 
-    if button_functions.get_active_state():
+    if button_functions.program_active_state:
       ##mouse movement
       move_x = controller_values['ABS_X']
       move_y = controller_values['ABS_Y']
