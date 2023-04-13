@@ -17,6 +17,8 @@ class App(ThemedTk):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.xbox_controller = XboxController()
+        self.current_macro = Macro()
+
 
         self.title('Xbox Controller GUI')
         self.geometry('800x600')
@@ -160,6 +162,10 @@ class App(ThemedTk):
         self.trash_button2 = ttk.Button(self.set_entry_frame2, text="🗑️", command=self.reset_button_name_var, style="Custom.TButton", width=3)
         self.trash_button2.grid(column=1, row=1, padx=0, pady=10, sticky='nsew')
 
+        # create trash button to reset string
+        self.sequence_button = ttk.Button(self.set_entry_frame2, text="🗑️", command=self.reset_button_name_var, style="Custom.TButton", widt=3)
+        self.sequence_button.grid(column=2, row=1, padx=0, pady=10, sticky='nsew')
+
         self.entry2 = ttk.Entry(self.set_entry_frame2, textvariable=self.button_name_var, width=27, font=("Trebuchet MS", 13), style="Custom.TEntry", state='readonly', cursor='arrow')
         self.entry2.grid(column=0, row=1, padx=1, pady=10, sticky='nsew')
         # Set Entry 2 Frame ===================================================================================================/\ /\ /\
@@ -214,16 +220,29 @@ class App(ThemedTk):
         x, y = event.x, event.y
         for button, (x1, y1, x2, y2) in self.button_coordinates.items():
             if x1 <= x <= x2 and y1 <= y <= y2:
-                current = self.button_name_var.get()
-                if current:
-                  self.button_name_var.set(f"{current}+{button.upper()}")  # Update the text in the first Entry widget
-                else:
-                  self.button_name_var.set(button.upper())
-                break
+                if button.upper() not in self.current_macro.xbox_binds:
+                    self.current_macro.add_bind(button.upper())
+                xbox_bind_string =""
+                for bind in self.current_macro.xbox_binds:
+                    xbox_bind_string += f"{bind}+"
+                if xbox_bind_string[-1] == "+":
+                    xbox_bind_string = xbox_bind_string[:-1]
+                self.button_name_var.set(xbox_bind_string)  # Update the text in the first Entry widget
+
+
             
     def reset_button_name_var(self, event=None):
         self.button_name_var.set("")
+        self.current_macro.xbox_binds = []
 
+class Macro():
+    def __init__(self):
+        self.xbox_binds = []
+        self.pc_binds = []
+        self.sequence = False
+    
+    def add_bind(self, xbox_bind):
+        self.xbox_binds.append(xbox_bind)
 
 if __name__ == "__main__":
     app = App()
