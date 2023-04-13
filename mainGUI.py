@@ -67,10 +67,10 @@ class App(ThemedTk):
         self.controller_status = tk.StringVar()
         self.controller_status.set("Controller Status: Unknown")
 
-        label_font = ("Helvetica", 14, "bold")
+        helvatica = ("Helvetica", 14, "bold")
 
         style = ttk.Style()
-        style.configure("RedText.TLabel", foreground="white", font=label_font, background="#222222")
+        style.configure("RedText.TLabel", foreground="white", font=helvatica, background="#222222")
 
         self.status_label = ttk.Label(self.main_frame, textvariable=self.controller_status, style="RedText.TLabel")
         self.status_label.grid(column=0, row=0, padx=5, pady=5, sticky='w')
@@ -79,32 +79,34 @@ class App(ThemedTk):
         self.letters_frame = ttk.Frame(self.main_frame)
         self.letters_frame.grid(column=0, row=1, padx=10, pady=70, sticky='nsew')
 
+        # Create alphabet list
+        self.alphabet_list = tk.Listbox(self.letters_frame, font=helvatica, bg="#222222", fg="white", selectbackground="#4a4a4a")
+        self.alphabet_list.grid(column=0, row=0, padx=10, pady=10, sticky='nsew')
+
+        for letter in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
+            self.alphabet_list.insert(tk.END, " "+letter)
+
+
         # Image frame
         self.image_frame = ttk.Frame(self.main_frame)
         self.image_frame.grid(column=1, row=1, padx=10, pady=10, sticky='nsew')
 
-        # Create alphabet list
-        self.alphabet_list = tk.Listbox(self.letters_frame, font=("Helvetica", 14), bg="#222222", fg="white", selectbackground="#4a4a4a")
-        self.alphabet_list.grid(column=0, row=0, padx=10, pady=10, sticky='nsew')
-
-        for letter in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
-            self.alphabet_list.insert(tk.END, letter)
-
-
-        img = Image.open("xbox_controller.PNG")
+        img = Image.open("xbox_controller_on.PNG")
         image_scaler = 0.4
+
 
         # Create a Canvas widget to display the images
         self.canvas = tk.Canvas(self.image_frame, width=int(img.size[0]*image_scaler), height=int(img.size[1]*image_scaler), bg="#222222", bd=0, highlightthickness=0)
-        self.canvas.grid(column=0, row=0, padx=10, pady=10, sticky='nsew')
+        self.canvas.grid(column=0, row=0, padx=0, pady=0, sticky='nsew')
 
-        # Xbox controller image
-        img_resized = img.resize((int(img.size[0]*image_scaler), int(img.size[1]*image_scaler)), Image.ANTIALIAS)
-        self.xbox_controller_img = ImageTk.PhotoImage(img_resized)
-        self.canvas.create_image(0, 0, image=self.xbox_controller_img, anchor='nw')
+        self.base_images = {}
+        for button in ['on', 'off']:
+            base_img = Image.open(f"xbox_controller_{button}.PNG")
+            base_img_resized = base_img.resize((int(img.size[0]*image_scaler), int(img.size[1]*image_scaler)), Image.ANTIALIAS)
+            self.base_images[button] = ImageTk.PhotoImage(base_img_resized)
 
         self.overlay_images = {}
-        for button in ['a', 'b', 'x', 'y', 'blank']:
+        for button in ['a', 'b', 'x', 'y', 'blank', 'sel', 'start', 'd_up', 'd_down', 'd_right', 'd_left']:
             overlay_img = Image.open(f"button_hovers/{button}.PNG")
             overlay_img_resized = overlay_img.resize((int(img.size[0]*image_scaler), int(img.size[1]*image_scaler)), Image.ANTIALIAS)
             self.overlay_images[button] = ImageTk.PhotoImage(overlay_img_resized)
@@ -113,13 +115,29 @@ class App(ThemedTk):
         self.button_coordinates = {
             'a': (323, 128, 358, 160),
             'y': (323, 70, 358, 104),
-            
+
+            'x': (295, 100, 328, 133),
+            'b': (355, 100, 388, 133),
+
+            'sel': (252, 105, 273, 126),
+            'start': (190, 105, 211, 126),
+
+            'd_up': (166, 150, 188, 175),
+            'd_down': (166, 190, 188, 220),
+
+            'd_left': (144, 170, 168, 194),
+            'd_right': (188, 170, 208, 194),
         }
 
+        self.base_id = self.canvas.create_image(0, 0, image=None, anchor='nw')
         self.overlay_id = self.canvas.create_image(0, 0, image=None, anchor='nw')
+
 
         self.canvas.bind('<Motion>', self.on_mouse_hover)
 
+
+
+        ##call for connection check
         self.xbox_controller = XboxController()
         self.update_status()
 
@@ -137,9 +155,9 @@ class App(ThemedTk):
 
     def update_status(self):
         if self.xbox_controller.controller_status:
-            self.controller_status.set("Controller Status: Connected")
+            self.canvas.itemconfig(self.base_id, image=self.base_images['on'])
         else:
-            self.controller_status.set("Controller Status: Disconnected")
+            self.canvas.itemconfig(self.base_id, image=self.base_images['off'])
         self.after(100, self.update_status)
 
 if __name__ == "__main__":
