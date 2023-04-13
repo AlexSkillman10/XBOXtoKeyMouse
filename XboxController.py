@@ -45,7 +45,7 @@ class XboxController(object):
         while True:
             events = []
 
-            try:  
+            try:
                 events = get_gamepad()
                 self.controller_status = True
             except inputs.UnpluggedError:
