@@ -21,7 +21,7 @@ class App(ThemedTk):
 
 
         self.title('Xbox Controller GUI')
-        self.geometry('800x600')
+        self.geometry('900x600')
         self.set_theme("equilux")
 
         # Configure the dark theme colors
@@ -30,7 +30,7 @@ class App(ThemedTk):
         self.style.configure("TLabel", background="#222222", foreground="white")
         self.configure(bg=self.style.lookup('TFrame', 'background'))
         self.style.configure("Custom.TEntry", fieldbackground=self.style.lookup('TFrame', 'background'), foreground="white", background=self.style.lookup('TFrame', 'background'))
-        self.style.configure("Custom.TButton", fieldbackground=self.style.lookup('TFrame', 'background'), foreground="white", background=self.style.lookup('TFrame', 'background'), font=("Trebuchet MS", 13), anchor='center')
+        self.style.configure("Custom.TButton", fieldbackground=self.style.lookup('TFrame', 'background'), foreground="white", background=self.style.lookup('TFrame', 'background'), font=("Trebuchet MS", 10), anchor='center')
         
 
 
@@ -41,7 +41,7 @@ class App(ThemedTk):
 
         # Top Row ================================================================================================================================\/ \/ \/
         self.top_row = ttk.Frame(self.main_frame)
-        self.top_row.grid(column=0, row=1, padx=0, pady=33, sticky='nsew')
+        self.top_row.grid(column=0, row=1, padx=0, pady=23, sticky='nsew')
 
         # Centering Pad=================================================================================================================\/ \/ \/
         self.centering_pad = ttk.Frame(self.top_row)
@@ -50,14 +50,14 @@ class App(ThemedTk):
 
         # Image frame ==================================================================================================================\/ \/ \/
         self.image_frame = ttk.Frame(self.top_row)
-        self.image_frame.grid(column=1, row=0, padx=0, pady=0, sticky='nsew')  # Change row from 0 to 1
+        self.image_frame.grid(column=1, row=0, padx=(0, 30), pady=0, sticky='nsew')  # Change row from 0 to 1
 
         img = Image.open("xbox_controller_on.PNG")
         image_scaler = 0.4
 
         # Image canvas ==============================================================================\/ \/ \/
         self.canvas = tk.Canvas(self.image_frame, width=int(img.size[0]*image_scaler), height=int(img.size[1]*image_scaler), bg="#222222", bd=0, highlightthickness=0)
-        self.canvas.grid(column=0, row=0, padx=0, pady=10, sticky='nsew')
+        self.canvas.grid(column=0, row=0, padx=0, pady=7, sticky='nsew')
 
         self.base_images = {}
         for button in ['on', 'off']:
@@ -97,7 +97,7 @@ class App(ThemedTk):
 
         # Binds frame ==================================================================================================================\/ \/ \/
         self.binds_frame = ttk.Frame(self.top_row)
-        self.binds_frame.grid(column=2, row=0, padx=0, pady=15, sticky='nsew')
+        self.binds_frame.grid(column=2, row=0, padx=0, pady=0, sticky='nsew')
         self.listbox = tk.Listbox(self.binds_frame, width=40, height=20, bg="#222222", fg="white", selectbackground="#222222", selectforeground="white")
         self.listbox.grid(column=0, row=0, padx=0, pady=0, sticky='nsew')
         self.listbox.insert(1, "A")
@@ -126,22 +126,22 @@ class App(ThemedTk):
         self.set_entry_frame = ttk.Frame(self.set_frame)
         self.set_entry_frame.grid(column=0, row=0, padx=(0, 20), pady=0, sticky='nsew')
 
-        self.arrow_label = ttk.Label(self.set_entry_frame, text="XBOX", font=("Trebuchet MS", 16))
+        self.arrow_label = ttk.Label(self.set_entry_frame, text="XBOX", font=("Trebuchet MS", 25, "bold"))
         self.arrow_label.grid(column=0, row=0, padx=0, pady=(10, 0), sticky='nsew')
 
         # create trash button to reset string
         self.trash_button = ttk.Button(self.set_entry_frame, text="🗑️", command=self.reset_button_name_var, style="Custom.TButton", width=3)
-        self.trash_button.grid(column=1, row=1, padx=0, pady=10, sticky='nsew')
+        self.trash_button.grid(column=0, row=0, padx=0, pady=(0, 0), sticky='se')
 
         self.button_name_var = tk.StringVar()
-        self.entry1 = ttk.Entry(self.set_entry_frame, textvariable=self.button_name_var, width=27, font=("Trebuchet MS", 13), style="Custom.TEntry", state='readonly', cursor='arrow')
-        self.entry1.grid(column=0, row=1, padx=0, pady=10, sticky='nsew')
+        self.entry1 = ttk.Entry(self.set_entry_frame, textvariable=self.button_name_var, width=34, font=("Trebuchet MS", 13), style="Custom.TEntry", state='readonly', cursor='arrow')
+        self.entry1.grid(column=0, row=1, padx=0, pady=0, sticky='nsew')
         # Set Entry Frame =====================================================================================================/\ /\ /\
 
         # Center Arrow ========================================================================================================\/ \/ \/
 
         self.set_entry_frame3 = ttk.Frame(self.set_frame)
-        self.set_entry_frame3.grid(column=1, row=0, padx=(20, 20), pady=0, sticky='nsew')
+        self.set_entry_frame3.grid(column=1, row=0, padx=(10, 20), pady=0, sticky='nsew')
 
         self.arrow_label = ttk.Label(self.set_entry_frame3, text=" ", font=("Trebuchet MS", 12))
         self.arrow_label.grid(column=0, row=0, padx=2, pady=10, sticky='nsew')
@@ -153,21 +153,18 @@ class App(ThemedTk):
 
         # Set Entry 2 Frame ===================================================================================================\/ \/ \/
         self.set_entry_frame2 = ttk.Frame(self.set_frame)
-        self.set_entry_frame2.grid(column=3, row=0, padx=(20, 20), pady=0, sticky='nsew')
+        self.set_entry_frame2.grid(column=3, row=0, padx=(0, 20), pady=0, sticky='nsew')
 
-        self.arrow_label = ttk.Label(self.set_entry_frame2, text="PC", font=("Trebuchet MS", 16))
-        self.arrow_label.grid(column=0, row=0, padx=0, pady=(10, 0), sticky='nsew')
+        self.arrow_label2 = ttk.Label(self.set_entry_frame2, text="PC", font=("Trebuchet MS", 25, "bold"))
+        self.arrow_label2.grid(column=0, row=0, padx=0, pady=(10, 0), sticky='nsew')
 
         # create trash button to reset string
         self.trash_button2 = ttk.Button(self.set_entry_frame2, text="🗑️", command=self.reset_button_name_var, style="Custom.TButton", width=3)
-        self.trash_button2.grid(column=1, row=1, padx=0, pady=10, sticky='nsew')
+        self.trash_button2.grid(column=0, row=0, padx=0, pady=(0, 0), sticky='se')
 
-        # create trash button to reset string
-        self.sequence_button = ttk.Button(self.set_entry_frame2, text="🗑️", command=self.reset_button_name_var, style="Custom.TButton", widt=3)
-        self.sequence_button.grid(column=2, row=1, padx=0, pady=10, sticky='nsew')
-
-        self.entry2 = ttk.Entry(self.set_entry_frame2, textvariable=self.button_name_var, width=27, font=("Trebuchet MS", 13), style="Custom.TEntry", state='readonly', cursor='arrow')
-        self.entry2.grid(column=0, row=1, padx=1, pady=10, sticky='nsew')
+        self.button_name_var2 = tk.StringVar()
+        self.entry2 = ttk.Entry(self.set_entry_frame2, textvariable=self.button_name_var2, width=34, font=("Trebuchet MS", 13), style="Custom.TEntry", state='readonly', cursor='arrow')
+        self.entry2.grid(column=0, row=1, padx=0, pady=0, sticky='nsew')
         # Set Entry 2 Frame ===================================================================================================/\ /\ /\
         # Set Bind Frame ===============================================================================================================/\ /\ /\
         # Mid Row ================================================================================================================================/\ /\ /\
@@ -203,8 +200,8 @@ class App(ThemedTk):
           padx = difference // 4
           self.centering_pad.grid_configure(padx=padx)
 
-        difference = window_width - set_frame_width
-        if difference > 0:
+        difference = window_width - set_frame_width + 33
+        if difference > 3:
           padx = difference // 4
           self.centering_pad2.grid_configure(padx=padx)
             
