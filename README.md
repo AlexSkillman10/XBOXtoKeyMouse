@@ -28,3 +28,8 @@ simply type 'a', or 'x' (must be single character). To link a button to a progra
 link the path as a string to the the button in bindings.py. You will most likely
 need to change all the backslashes into forward slashes or specify it as a path.
 
+# Contributing
+
+If you would like to improve this project, please use the fork-pr workflow. Modify the dev branch 
+on your fork and submit a pull request to the main repository.
+
