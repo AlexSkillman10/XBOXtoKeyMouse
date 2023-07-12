@@ -1,7 +1,7 @@
 import os
 
-import buttonBindings as bindings
-from XboxController import XboxController
+from modules import button_bindings as bindings
+from modules import xbox_controller as xbox_controller 
 
 from pynput.keyboard import Key, Controller as KeyboardController
 from pynput.mouse import Button, Controller as MouseController
@@ -61,7 +61,7 @@ if __name__ == '__main__' and is_admin():
   keyboard = KeyboardController()
   mouse = MouseController()
 
-  Xbox = XboxController()
+  Xbox = xbox_controller.XboxController()
   button_functions = ButtonFunctions()
 
   button_update_cycle = 13
