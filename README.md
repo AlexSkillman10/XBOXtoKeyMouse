@@ -22,11 +22,9 @@ by pressing the two stick buttons at the same time, and pressing them again when
 
 # Changing settings
 
-You can change the bindings of the remote by modifying the variables in buttonBindings.py.
-Check out the links for specific keys. If you want to link it to just a character,
-simply type 'a', or 'x' (must be single character). To link a button to a program,
-link the path as a string to the the button in bindings.py. You will most likely
-need to change all the backslashes into forward slashes or specify it as a path.
+You can change the bindings of the remote by modifying the variables in buttonBindings.py
+If you want to link it to just a character, simply type 'a', or 'x' (must be single character). 
+To link a button to a program, link the to the button in bindings.py.
 
 # Contributing
 
